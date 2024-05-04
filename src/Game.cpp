@@ -32,21 +32,21 @@ void Game::InitScreenSize()
 
 bool Game::Process()
 {
-	auto now = std::chrono::system_clock::now();
-	if ((now - last_process_next).count() > ihm.GetSleep() * 1000) {
-		bool next = false;
-		if (!ihm.GetStep()) {
+	bool next = false;
+	if (ihm.GetStep()) {
+		if (ihm.GetNextStep()) {
+			ihm.SetNextStep(false);
 			next = true;
-		} else {
-			if (ihm.GetNextStep()) {
-				ihm.SetNextStep(false);
-				next = true;
-			}
 		}
-		
-		if (next) {
-			NextGen();
+	} else {
+		auto now = std::chrono::system_clock::now();
+		if ((now - last_process_next).count() > ihm.GetSleep() * 1000) {
+			next = true;
 		}
+	}
+	
+	if (next) {
+		NextGen();
 	}
 	
 	ihm.DrawGrid(grid, row, col);
