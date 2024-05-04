@@ -1,5 +1,7 @@
 #include "Ihm.hpp"
 
+#define SLEEP_REF 100'000
+
 Ihm::Ihm()
 {
 	initscr();
@@ -7,7 +9,7 @@ Ihm::Ihm()
 	keypad(stdscr, TRUE);
 	getmaxyx(stdscr,row,col);
 	
-	sleep = 100'000;
+	sleep = SLEEP_REF;
 	run = true;
 	step = false;
 	nextStep = false;
@@ -44,7 +46,7 @@ void Ihm::DrawGrid(std::vector<std::vector<char>> &grid, int row, int col)
 	print_info("SPACE", "Step by Step");
 	print_info("N", "Next Step");
 	move(row + 1, 0);
-	printw("Sleep time: %d s", sleep / 1'000'000);
+	printw("Sleep : %.1fx", ((double) SLEEP_REF / (double) sleep));
 	refresh();
 }
 
