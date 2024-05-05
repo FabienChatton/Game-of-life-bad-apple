@@ -9,10 +9,10 @@ Ihm::Ihm()
 	keypad(stdscr, TRUE);
 	getmaxyx(stdscr,row,col);
 	
-	sleep = SLEEP_REF;
 	run = true;
 	step = false;
 	nextStep = false;
+	speed = 1;
 }
 
 Ihm::~Ihm()
@@ -46,7 +46,7 @@ void Ihm::DrawGrid(std::vector<std::vector<char>> &grid, int row, int col)
 	print_info("SPACE", "Step by Step");
 	print_info("N", "Next Step");
 	move(row + 1, 0);
-	printw("Sleep : %.1fx", ((double) SLEEP_REF / (double) sleep));
+	printw("Sleep : %.1fx", speed);
 	refresh();
 }
 
@@ -60,12 +60,12 @@ void Ihm::ProcessInputKey()
 	}
 	switch(ch) {
 	case 's':
-		if (sleep > 0) {
-			sleep -= 10'000;
-		}
+		speed += 0.1;
 		break;
 	case 'd':
-		sleep += 10'000;
+		if (speed > 0.2) {
+			speed -= 0.1;
+		}
 		break;
 	case ' ':
 		step = !step;
@@ -93,7 +93,7 @@ bool Ihm::GetRun()
 
 unsigned int Ihm::GetSleep()
 {
-	return sleep;
+	return SLEEP_REF / speed;
 }
 
 bool Ihm::GetStep()

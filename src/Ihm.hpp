@@ -31,7 +31,7 @@ public:
 private:
 	int row;
 	int col;
-	unsigned int sleep;
+	double speed;
 	bool run;
 	bool step;
 	bool nextStep;
