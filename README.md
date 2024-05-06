@@ -9,6 +9,7 @@ This personal project is just for lerning c++.
 
 - [x] proof of concept
 - [ ] infinit grid
+- [ ] camera
 - [ ] save / load
 - [ ] bad apple demo
 
