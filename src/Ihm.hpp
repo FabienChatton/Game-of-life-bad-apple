@@ -11,13 +11,15 @@
 
 #include <vector>
 
+#include "Grid.hpp"
+
 class Ihm {
 
 public:
 	Ihm();
 	~Ihm();
 	
-	void DrawGrid(std::vector<std::vector<char>> &grid, int row, int col);
+	void DrawGrid(Grid &grid);
 	void ProcessInputKey();
 	
 	int GetRow();

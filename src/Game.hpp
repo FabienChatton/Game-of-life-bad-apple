@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include "Ihm.hpp"
+#include "Grid.hpp"
 
 #include <vector>
 #include <chrono>
@@ -12,17 +13,12 @@ class Game {
 public:
 	Game(const Ihm &ihm);
 	~Game();
-	void InitScreenSize();
 	bool Process();
 
 private:
 	Ihm ihm;
-	int row;
-	int col;
-	std::vector<std::vector<char>> grid;
-	
-	int GetNeighbor(int i, int j);
-	void NextGen();
+	Grid grid;
+
 	std::chrono::time_point<std::chrono::system_clock> last_process_next;
 
 };

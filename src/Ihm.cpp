@@ -30,23 +30,30 @@ void print_info(const char *key, const char *info)
 	printw("\t\t");
 }
 
-void Ihm::DrawGrid(std::vector<std::vector<char>> &grid, int row, int col)
+void Ihm::DrawGrid(Grid &grid)
 {
 	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < col; j++) {
-			char datum = grid[i][j];
-			mvaddch(i, j, datum == 0 ? ' ' : '#');
-		}
+		move(i, 0);
+		clrtoeol(); 
+	}
+	std::vector<Cell> cells = grid.GetAlivesCells();
+	for (unsigned int i = 0; i < cells.size(); i++) {
+		Cell c = cells[i];
+		Pos p = c.GetPos();
+		mvaddch(p.GetY(), p.GetX(), '#');
 	}
 	
-	move(row, 0);
+	
+	move(0, 0);
 	print_info("F1", "Quit");
 	print_info("S", "Speed Up");
 	print_info("D", "Speed Down");
 	print_info("SPACE", "Step by Step");
 	print_info("N", "Next Step");
 	move(row + 1, 0);
+	printw("cells: %ld ", grid.GetAlivesCells().size());
 	printw("Sleep : %.1fx", speed);
+	
 	refresh();
 }
 
