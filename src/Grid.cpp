@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <stdexcept>
 
+#include <iostream>
+#include <chrono>
+#include <ncurses.h>
+
 Grid::Grid()
 {
 	
@@ -22,12 +26,6 @@ void Grid::RandomGrid(int row, int col)
 			}
 		}
 	}
-	
-	/*
-	Cell c(10, 10); cells.push_back(c);
-	Cell c1(11, 10); cells.push_back(c1);
-	Cell c2(12, 10); cells.push_back(c2);
-	*/
 }
 
 
@@ -38,11 +36,11 @@ void Grid::ClearGrid()
 
 void Grid::NextGen()
 {
-	std::unordered_map<long int, Cell> tmp = std::unordered_map<long int, Cell>();
-	std::vector<Pos> toCheck = GetPosToCheck();
+	std::unordered_map<long int, Cell, PosHash> tmp = std::unordered_map<long int, Cell, PosHash>();
+	std::unordered_map<long int, Pos> toCheck = GetPosToCheck();
 	
-	for (unsigned int i = 0; i < toCheck.size(); i++) {
-		Pos pos = toCheck[i];
+	for (auto check : toCheck) {
+		Pos pos = check.second;
 		int x = pos.GetX();
 		int y = pos.GetY();
 		unsigned int count = 0;
@@ -75,17 +73,16 @@ void Grid::NextGen()
 	cells = tmp;
 }
 
-std::vector<Pos> Grid::GetPosToCheck()
+std::unordered_map<long int, Pos> Grid::GetPosToCheck()
 {
-	std::vector<Pos> tmp;
+	std::unordered_map<long int, Pos> tmp;
 	std::vector<Cell> alivesCell = GetAlivesCells();
 	
 	for (unsigned int i = 0; i < alivesCell.size(); i++) {
 		Pos pos = alivesCell[i].GetPos();
-		tmp.push_back(pos);
+		tmp.insert(std::make_pair(pos.ToLong(), pos));
 		for (int j = -1; j <= 1; j++) {
 			for (int k = -1; k <= 1; k++) {
-				// if (j == 0 && k == 0) continue;
 				int nX = pos.GetX() + j;
 				int nY = pos.GetY() + k;
 				std::optional opt = GetCellAt(nY, nX);
@@ -94,10 +91,7 @@ std::vector<Pos> Grid::GetPosToCheck()
 				
 				Pos nPos(nX, nY);
 				
-				// if not found
-				if (std::find(tmp.begin(), tmp.end(), nPos) == tmp.end()) {
-					tmp.push_back(nPos);
-				}
+				tmp.insert(std::make_pair(nPos.ToLong(), nPos));
 			}
 		}
 	}
@@ -117,10 +111,10 @@ std::vector<Cell> Grid::GetAlivesCells()
 
 std::optional<Cell> Grid::GetCellAt(int x, int y)
 {
-	try {
-		Cell c = cells.at(Pos::ToLong(x, y));
-		return c;
-	} catch (std::out_of_range &e) {
+	auto f = cells.find(Pos::ToLong(x, y));
+	if (f == cells.end()) {
 		return std::nullopt;
+	} else {
+		return f->second;
 	}
 }

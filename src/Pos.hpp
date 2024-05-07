@@ -1,6 +1,8 @@
 #ifndef POS_HPP
 #define POS_HPP
 
+#include <cstddef>
+
 class Pos {
 public:
 	Pos(int x, int y);
@@ -18,6 +20,10 @@ private:
 	int x;
 	int y;
 	
+};
+
+struct PosHash {
+	size_t operator()(const long int &k) const;
 };
 
 #endif // POS_HPP

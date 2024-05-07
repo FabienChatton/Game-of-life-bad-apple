@@ -20,9 +20,9 @@ public:
 	
 private:
 	std::optional<Cell> GetCellAt(int x, int y);
-	std::vector<Pos> GetPosToCheck();
+	std::unordered_map<long int, Pos> GetPosToCheck();
 
-	std::unordered_map<long int, Cell> cells;
+	std::unordered_map<long int, Cell, PosHash> cells;
 };
 
 #endif // GRID_HPP

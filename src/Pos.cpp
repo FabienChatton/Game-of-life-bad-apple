@@ -33,3 +33,8 @@ bool Pos::operator==(const Pos &other) const
 {
 	return x == other.x && y == other.y;
 }
+
+size_t PosHash::operator()(const long int &k) const
+{
+	return k;
+}
