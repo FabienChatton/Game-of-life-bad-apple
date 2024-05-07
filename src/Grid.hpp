@@ -5,7 +5,7 @@
 #include "Pos.hpp"
 
 #include <vector>
-#include <set>
+#include <unordered_map>
 #include <optional>
 
 class Grid {
@@ -22,7 +22,7 @@ private:
 	std::optional<Cell> GetCellAt(int x, int y);
 	std::vector<Pos> GetPosToCheck();
 
-	std::vector<Cell> cells;
+	std::unordered_map<long int, Cell> cells;
 };
 
 #endif // GRID_HPP

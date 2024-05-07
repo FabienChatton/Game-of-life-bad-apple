@@ -9,6 +9,7 @@
 
 int main(void)
 {
+	
 	Ihm ihm;
 	Game game(ihm);
 	while (game.Process()) { }

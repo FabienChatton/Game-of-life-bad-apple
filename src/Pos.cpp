@@ -1,9 +1,22 @@
 #include "Pos.hpp"
 
-Pos::Pos(int x, int y)
+Pos::Pos(int x_, int y_): x(x_), y(y_)
 {
-	this->x = x;
-	this->y = y;
+	
+}
+
+long int Pos::ToLong() const
+{
+	long int l = (long) x << (sizeof(int) * 8);
+	l |= y;
+	return l;
+}
+
+long int Pos::ToLong(int x, int y)
+{
+	long int l = (long) x << (sizeof(int) * 8);
+	l |= y;
+	return l;
 }
 
 int Pos::GetX() const

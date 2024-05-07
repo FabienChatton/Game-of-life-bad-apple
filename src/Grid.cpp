@@ -3,6 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <stdexcept>
 
 Grid::Grid()
 {
@@ -15,8 +16,9 @@ void Grid::RandomGrid(int row, int col)
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
 			if (rand() % 2 == 0) {
+				
 				Cell c(i, j);
-				cells.push_back(c);
+				cells.insert(std::make_pair(c.GetPos().ToLong(), c));
 			}
 		}
 	}
@@ -28,6 +30,7 @@ void Grid::RandomGrid(int row, int col)
 	*/
 }
 
+
 void Grid::ClearGrid()
 {
 	cells.clear();
@@ -35,7 +38,7 @@ void Grid::ClearGrid()
 
 void Grid::NextGen()
 {
-	std::vector<Cell> tmp = std::vector<Cell>();
+	std::unordered_map<long int, Cell> tmp = std::unordered_map<long int, Cell>();
 	std::vector<Pos> toCheck = GetPosToCheck();
 	
 	for (unsigned int i = 0; i < toCheck.size(); i++) {
@@ -64,10 +67,8 @@ void Grid::NextGen()
 		
 		if (ok) {
 			Cell nCell(x, y);
-			// if not found
-			if (std::find(tmp.begin(), tmp.end(), nCell) == tmp.end()) {
-				tmp.push_back(nCell);
-			}
+			long int nLong = nCell.GetPos().ToLong();
+			tmp.insert(std::make_pair(nLong, nCell));
 		}
 	}
 	
@@ -106,20 +107,20 @@ std::vector<Pos> Grid::GetPosToCheck()
 
 std::vector<Cell> Grid::GetAlivesCells()
 {
-	return cells;
+	std::vector v = std::vector<Cell>();
+	v.reserve(cells.size());
+	for (auto k : cells) {
+		v.push_back(k.second);
+	}
+	return v;
 }
 
 std::optional<Cell> Grid::GetCellAt(int x, int y)
 {
-	for (unsigned int i = 0; i < cells.size(); i++) {
-		Cell c = cells[i];
-		Pos pos = c.GetPos();
-		int ox = pos.GetX();
-		int oy = pos.GetY();
-		if (ox == x && oy == y) {
-			return c;
-		}
+	try {
+		Cell c = cells.at(Pos::ToLong(x, y));
+		return c;
+	} catch (std::out_of_range &e) {
+		return std::nullopt;
 	}
-	
-	return std::nullopt;
 }
