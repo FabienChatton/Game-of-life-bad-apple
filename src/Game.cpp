@@ -28,6 +28,7 @@ bool Game::Process()
 		auto now = std::chrono::system_clock::now();
 		if ((now - last_process_next).count() > ihm.GetSleep() * 1000) {
 			next = true;
+			last_process_next = now;
 		}
 	}
 	
