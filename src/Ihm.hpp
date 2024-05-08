@@ -20,6 +20,7 @@ public:
 	~Ihm();
 	
 	void DrawGrid(Grid &grid);
+	void DrawGridCamera(Grid &grid);
 	void ProcessInputKey();
 	
 	int GetRow();
@@ -30,6 +31,11 @@ public:
 	bool GetNextStep();
 	void SetNextStep(bool n);
 	
+	void MoveUp(int n);
+	void MoveDown(int n);
+	void MoveLeft(int n);
+	void MoveRight(int n);
+	
 private:
 	int row;
 	int col;
@@ -37,7 +43,8 @@ private:
 	bool run;
 	bool step;
 	bool nextStep;
-	
+	int cameraX, cameraY;
+
 };
 
 #endif // IHM_HPP

@@ -5,10 +5,6 @@
 #include <algorithm>
 #include <stdexcept>
 
-#include <iostream>
-#include <chrono>
-#include <ncurses.h>
-
 Grid::Grid()
 {
 	
@@ -26,12 +22,6 @@ void Grid::RandomGrid(int row, int col)
 			}
 		}
 	}
-}
-
-
-void Grid::ClearGrid()
-{
-	cells.clear();
 }
 
 void Grid::NextGen()

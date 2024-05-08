@@ -13,7 +13,6 @@ public:
 	Grid();
 	
 	void RandomGrid(int row, int col);
-	void ClearGrid();
 	void NextGen();
 	
 	std::vector<Cell> GetAlivesCells();
