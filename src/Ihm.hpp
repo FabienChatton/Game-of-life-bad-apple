@@ -12,6 +12,9 @@
 #include <vector>
 
 #include "Grid.hpp"
+#include "Game.hpp"
+
+class Game;
 
 class Ihm {
 
@@ -36,7 +39,10 @@ public:
 	void MoveLeft(int n);
 	void MoveRight(int n);
 	
+	void SetGame(Game *game);
+	
 private:
+	Game *game;
 	int row;
 	int col;
 	double speed;

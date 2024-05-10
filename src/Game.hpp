@@ -8,19 +8,23 @@
 #include <chrono>
 #include <ctime>
 
+
+class Ihm;
+
 class Game {
 
 public:
-	Game(const Ihm &ihm);
+	Game(Ihm *ihm);
 	~Game();
 	bool Process();
-
+	unsigned int GetTick();
+	
 private:
-	Ihm ihm;
-	Grid grid;
+	Ihm *ihm;
+	Grid *grid;
 
 	std::chrono::time_point<std::chrono::system_clock> last_process_next;
-
+	unsigned int tick;
 };
 
 #endif // GAME_HPP

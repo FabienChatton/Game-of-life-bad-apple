@@ -20,6 +20,7 @@ Ihm::Ihm()
 	nextStep = false;
 	speed = 1;
 	cameraX = 0;
+	cameraY = 0;
 }
 
 Ihm::~Ihm()
@@ -57,8 +58,12 @@ void Ihm::DrawGrid(Grid &grid)
 	print_info("SPACE", "Step by Step");
 	print_info("N", "Next Step");
 	move(row + 1, 0);
-	printw("cells: %ld ", grid.GetAlivesCells().size());
-	printw("speed: %.1fx sleep: %d", speed, GetSleep());
+	printw("tick: %d, cells %ld, speed: %.1fx sleep: %d",
+		game->GetTick(),
+		grid.GetAlivesCells().size(),
+		speed,
+		GetSleep()
+	);
 	
 	refresh();
 }
@@ -71,6 +76,7 @@ void Ihm::ProcessInputKey()
 	if (ch == KEY_F(1)) {
 		run = false;
 	}
+
 	switch(ch) {
 	case 's':
 		speed += 0.1;
@@ -169,4 +175,9 @@ void Ihm::MoveLeft(int n)
 void Ihm::MoveRight(int n)
 {
 	cameraX += n;
+}
+
+void Ihm::SetGame(Game *game)
+{
+	this->game = game;
 }

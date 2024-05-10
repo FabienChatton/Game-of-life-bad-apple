@@ -11,7 +11,8 @@ int main(void)
 {
 	
 	Ihm ihm;
-	Game game(ihm);
+	Game game(&ihm);
+	ihm.SetGame(&game);
 	while (game.Process()) { }
     return 0;
 }
