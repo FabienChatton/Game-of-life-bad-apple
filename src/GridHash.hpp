@@ -12,6 +12,8 @@ public:
 	void RandomGrid(int row, int col) override;
 	void NextGen() override;
 	std::vector<Cell> GetAlivesCells() override;
+	void Clear() override;
+	void SetAt(int row, int col, char state) override;
 
 private:
 	std::unordered_map<long int, Cell, PosHash> cells;

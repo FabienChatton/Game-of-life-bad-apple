@@ -70,3 +70,17 @@ std::vector<Cell> GridArray::GetAlivesCells()
 
 	return tmp;
 }
+
+void GridArray::Clear()
+{
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			grid[i][j] = 0;
+		}
+	}
+}
+
+void GridArray::SetAt(int row, int col, char state)
+{
+	grid[row][col] = state;
+}

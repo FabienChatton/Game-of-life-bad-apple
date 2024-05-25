@@ -50,6 +50,9 @@ private:
 	bool step;
 	bool nextStep;
 	int cameraX, cameraY;
+	
+	void SaveGrid();
+	void LoadGrid();
 
 };
 

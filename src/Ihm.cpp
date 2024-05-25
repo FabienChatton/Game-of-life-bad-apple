@@ -57,12 +57,15 @@ void Ihm::DrawGrid(Grid &grid)
 	print_info("D", "Speed Down");
 	print_info("SPACE", "Step by Step");
 	print_info("N", "Next Step");
+	print_info("K", "Save");
+	print_info("L", "Load");
+	print_info("B", "Bad apple");
 	move(row + 1, 0);
-	printw("tick: %d, cells %ld, speed: %.1fx sleep: %d",
+	printw("tick: %d, cells %ld, max: %.1ft/s, fps %.1f",
 		game->GetTick(),
 		grid.GetAlivesCells().size(),
-		speed,
-		GetSleep()
+		1'000'000 / (double) GetSleep(), // tick / 1 sec
+		(1'000'000 / (double) game->GetDelta()) * 1000
 	);
 	
 	refresh();
@@ -118,6 +121,17 @@ void Ihm::ProcessInputKey()
 		break;
 	case CTRL_KEY_RIGHT:
 		MoveRight(10);
+		break;
+		
+	case 'k':
+		SaveGrid();
+		break;
+	case 'l':
+		LoadGrid();
+		break;
+	
+	case 'b':
+		game->SetBadApple();
 		break;
 	}
 }
@@ -180,4 +194,14 @@ void Ihm::MoveRight(int n)
 void Ihm::SetGame(Game *game)
 {
 	this->game = game;
+}
+
+void Ihm::SaveGrid()
+{
+	game->SaveGrid();
+}
+
+void Ihm::LoadGrid()
+{
+	game->LoadGrid();
 }

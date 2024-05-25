@@ -105,3 +105,23 @@ std::optional<Cell> GridHash::GetCellAt(int x, int y)
 		return f->second;
 	}
 }
+
+void GridHash::Clear()
+{
+	cells.clear();
+}
+
+void GridHash::SetAt(int row, int col, char state)
+{
+	auto f = cells.find(Pos::ToLong(row, col));
+	if (f == cells.end()) {
+		if (state == 1) {
+			Cell c(row, col);
+			cells.insert(std::make_pair(c.GetPos().ToLong(), c));
+		}
+	} else {
+		if (state == 0) {
+			cells.erase(f);
+		}
+	}
+}

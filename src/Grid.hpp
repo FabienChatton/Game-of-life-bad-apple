@@ -14,6 +14,8 @@ public:
 	virtual void RandomGrid(int row, int col) = 0;
 	virtual void NextGen() = 0;
 	virtual std::vector<Cell> GetAlivesCells() = 0;
+	virtual void Clear() = 0;
+	virtual void SetAt(int row, int col, char state) = 0;
 private:
 	
 };

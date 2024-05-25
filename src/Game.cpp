@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "GridHash.hpp"
 #include "GridArray.hpp"
+#include "InputOutput.hpp"
 
 #include <time.h>
 #include <stdlib.h>
@@ -11,8 +12,11 @@ Game::Game(Ihm *ihm)
 {
 	this->ihm = ihm;
 	grid = new GridArray;
-	grid->RandomGrid(this->ihm->GetCol(), this->ihm->GetRow());
+	grid->RandomGrid(480, 360);
+	grid->Clear();
 	tick = 0;
+	bai = 0;
+	isBadApple = 0;
 }
 
 Game::~Game()
@@ -30,13 +34,18 @@ bool Game::Process()
 		}
 	} else {
 		auto now = std::chrono::system_clock::now();
-		if ((now - last_process_next).count() > ihm->GetSleep() * 1000) {
+		unsigned int newDelta = (now - last_process_next).count();
+		if (newDelta > ihm->GetSleep() * 1000) {
 			next = true;
 			last_process_next = now;
+			delta = newDelta;
 		}
 	}
 	
 	if (next) {
+		if (isBadApple) {
+			BadApple();
+		}
 		grid->NextGen();
 		++tick;
 	}
@@ -49,4 +58,40 @@ bool Game::Process()
 unsigned int Game::GetTick()
 {
 	return tick;
+}
+
+unsigned int Game::GetDelta()
+{
+	return delta;
+}
+
+void Game::SaveGrid()
+{
+	auto cells = grid->GetAlivesCells();
+	InputOutput::SaveAlivesCells(cells);
+}
+
+void Game::LoadGrid()
+{
+	std::vector<Cell> cells = InputOutput::ReadCells();
+	for (unsigned int i = 0; i < cells.size(); i++) {
+		Cell c = cells[i];
+		Pos p = c.GetPos();
+		grid->SetAt(p.GetX(), p.GetY(), 1);
+	}
+}
+
+void Game::SetBadApple()
+{
+	isBadApple = true;
+}
+
+void Game::BadApple()
+{
+	std::vector<Cell> cells = InputOutput::ReadCells(bai++);
+	for (unsigned int i = 0; i < cells.size(); i++) {
+		Cell c = cells[i];
+		Pos p = c.GetPos();
+		grid->SetAt(p.GetX(), p.GetY(), 1);
+	}
 }

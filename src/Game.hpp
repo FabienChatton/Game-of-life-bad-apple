@@ -18,13 +18,21 @@ public:
 	~Game();
 	bool Process();
 	unsigned int GetTick();
+	unsigned int GetDelta();
+	void SaveGrid();
+	void LoadGrid();
+	void SetBadApple();
 	
 private:
+	void BadApple();
 	Ihm *ihm;
 	Grid *grid;
 
 	std::chrono::time_point<std::chrono::system_clock> last_process_next;
 	unsigned int tick;
+	unsigned int delta;
+	unsigned int bai;
+	bool isBadApple;
 };
 
 #endif // GAME_HPP
