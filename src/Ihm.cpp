@@ -59,6 +59,7 @@ void Ihm::DrawGrid(Grid &grid)
 	print_info("N", "Next Step");
 	print_info("K", "Save");
 	print_info("L", "Load");
+	print_info("C", "Clear Grid");
 	print_info("B", "Bad apple");
 	move(row + 1, 0);
 	printw("tick: %d, cells %ld, max: %.1ft/s, fps %.1f",
@@ -132,6 +133,9 @@ void Ihm::ProcessInputKey()
 	
 	case 'b':
 		game->SetBadApple();
+		break;
+	case 'c':
+		game->ClearGrid();
 		break;
 	}
 }

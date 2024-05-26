@@ -22,6 +22,7 @@ public:
 	void SaveGrid();
 	void LoadGrid();
 	void SetBadApple();
+	void ClearGrid();
 	
 private:
 	void BadApple();

@@ -6,7 +6,7 @@
 
 void InputOutput::SaveAlivesCells(std::vector<Cell> cells)
 {
-	std::ofstream out("output.txt");
+	std::ofstream out("assets/output.txt");
 	
 	for (unsigned int i = 0; i < cells.size(); i++) {
 		Cell c = cells[i];
@@ -23,7 +23,7 @@ std::vector<Cell> InputOutput::ReadCells()
 {
 	int a, b;
 	std::vector<Cell> tmp = std::vector<Cell>();
-	std::ifstream infile("input.txt");
+	std::ifstream infile("assets/input.txt");
 	
 	while (infile >> a >> b)
 	{
@@ -37,7 +37,7 @@ std::vector<Cell> InputOutput::ReadCells(unsigned int i)
 {
 	int a, b;
 	std::vector<Cell> tmp = std::vector<Cell>();
-	std::string badAppleFileName = "input" + std::to_string(i);
+	std::string badAppleFileName = "assets/input" + std::to_string(i);
 	badAppleFileName += ".txt"; 
 	std::ifstream infile(badAppleFileName);
 	

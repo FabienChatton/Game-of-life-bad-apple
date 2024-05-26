@@ -13,7 +13,7 @@ Game::Game(Ihm *ihm)
 	this->ihm = ihm;
 	grid = new GridArray;
 	grid->RandomGrid(480, 360);
-	grid->Clear();
+	// grid->Clear();
 	tick = 0;
 	bai = 0;
 	isBadApple = 0;
@@ -94,4 +94,9 @@ void Game::BadApple()
 		Pos p = c.GetPos();
 		grid->SetAt(p.GetX(), p.GetY(), 1);
 	}
+}
+
+void Game::ClearGrid()
+{
+	grid->Clear();
 }
