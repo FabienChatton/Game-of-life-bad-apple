@@ -8,8 +8,8 @@ This personal project is just for lerning c++.
 ## Roadmap
 
 - [x] proof of concept
-- [ ] infinit grid
-- [ ] camera
-- [ ] save / load
-- [ ] bad apple demo
+- [x] infinit grid
+- [x] camera
+- [x] save / load
+- [x] bad apple demo
 
